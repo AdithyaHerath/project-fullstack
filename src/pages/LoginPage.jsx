@@ -18,7 +18,7 @@ export default function LoginPage() {
   function validate() {
     const nextErrors = {};
     if (!email.trim()) nextErrors.email = "Email is required."; //email
-    if (!password) nextErrors.password = "Password is required.";
+    if (!password) nextErrors.password = "Password is required.";//password
     return nextErrors;
   }
 
