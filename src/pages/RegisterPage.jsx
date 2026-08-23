@@ -24,7 +24,7 @@ export default function RegisterPage() {
     const nextErrors = {};
     if (!name.trim()) nextErrors.name = "Name is required.";//name
     if (!email.trim()) {
-      nextErrors.email = "Email is required.";
+      nextErrors.email = "Email is required.";//email
     } else if (!isValidEmail(email.trim())) {
       nextErrors.email = "Enter a valid email address.";
     }
