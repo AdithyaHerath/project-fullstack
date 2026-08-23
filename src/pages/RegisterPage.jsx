@@ -74,7 +74,7 @@ export default function RegisterPage() {
 
           <form onSubmit={handleSubmit} noValidate>
             <div className="form-field">
-              <label htmlFor="register-name">Name</label>
+              <label htmlFor="register-name">Name</label> 
               <input
                 id="register-name"
                 type="text"
