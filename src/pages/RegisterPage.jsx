@@ -29,7 +29,7 @@ export default function RegisterPage() {
       nextErrors.email = "Enter a valid email address.";
     }
     if (!password) {
-      nextErrors.password = "Password is required.";
+      nextErrors.password = "Password is required.";//password
     } else if (password.length < MIN_PASSWORD_LENGTH) {
       nextErrors.password = `Password must be at least ${MIN_PASSWORD_LENGTH} characters.`;
     }
