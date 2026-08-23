@@ -1,25 +1,45 @@
 import { useState } from "react";
+
 import { STATUS_LABELS, TASK_STATUSES } from "../data/mockData";
+
 import "../styles/TaskForm.css";
 
-export default function TaskForm({ initialTask, onSubmit, onCancel, submitLabel = "Save Task" }) {
+export default function TaskForm({
+  initialTask,
+  onSubmit,
+  onCancel,
+  submitLabel = "Save Task",
+}) {
   const [title, setTitle] = useState(initialTask?.title || "");
-  const [description, setDescription] = useState(initialTask?.description || "");
-  const [status, setStatus] = useState(initialTask?.status || TASK_STATUSES.TODO);
-  const [assignedTo, setAssignedTo] = useState(initialTask?.assignedTo || "");
+  const [description, setDescription] = useState(
+    initialTask?.description || ""
+  );
+  const [status, setStatus] = useState(
+    initialTask?.status || TASK_STATUSES.TODO
+  );
+  const [assignedTo, setAssignedTo] = useState(
+    initialTask?.assignedTo || ""
+  );
+  const [priority, setPriority] = useState(
+    initialTask?.priority || "medium"
+  );
   const [errors, setErrors] = useState({});
 
   function validate() {
     const nextErrors = {};
+
     if (!title.trim()) nextErrors.title = "Title is required.";
     if (!status) nextErrors.status = "Status is required.";
+
     return nextErrors;
   }
 
   function handleSubmit(e) {
     e.preventDefault();
+
     const nextErrors = validate();
     setErrors(nextErrors);
+
     if (Object.keys(nextErrors).length > 0) return;
 
     onSubmit({
@@ -27,6 +47,7 @@ export default function TaskForm({ initialTask, onSubmit, onCancel, submitLabel 
       description: description.trim(),
       status,
       assignedTo: assignedTo.trim(),
+      priority,
     });
   }
 
@@ -40,10 +61,17 @@ export default function TaskForm({ initialTask, onSubmit, onCancel, submitLabel 
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           aria-invalid={Boolean(errors.title)}
-          aria-describedby={errors.title ? "task-title-error" : undefined}
+          aria-describedby={
+            errors.title ? "task-title-error" : undefined
+          }
         />
+
         {errors.title && (
-          <span id="task-title-error" className="form-error" role="alert">
+          <span
+            id="task-title-error"
+            className="form-error"
+            role="alert"
+          >
             {errors.title}
           </span>
         )}
@@ -61,13 +89,19 @@ export default function TaskForm({ initialTask, onSubmit, onCancel, submitLabel 
 
       <div className="form-field">
         <label htmlFor="task-status">Status</label>
-        <select id="task-status" value={status} onChange={(e) => setStatus(e.target.value)}>
+
+        <select
+          id="task-status"
+          value={status}
+          onChange={(e) => setStatus(e.target.value)}
+        >
           {Object.values(TASK_STATUSES).map((s) => (
             <option key={s} value={s}>
               {STATUS_LABELS[s]}
             </option>
           ))}
         </select>
+
         {errors.status && (
           <span className="form-error" role="alert">
             {errors.status}
@@ -77,6 +111,7 @@ export default function TaskForm({ initialTask, onSubmit, onCancel, submitLabel 
 
       <div className="form-field">
         <label htmlFor="task-assignee">Assignee</label>
+
         <input
           id="task-assignee"
           type="text"
@@ -86,11 +121,33 @@ export default function TaskForm({ initialTask, onSubmit, onCancel, submitLabel 
         />
       </div>
 
+      <div className="form-field">
+        <label htmlFor="task-priority">Priority</label>
+
+        <select
+          id="task-priority"
+          value={priority}
+          onChange={(e) => setPriority(e.target.value)}
+        >
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+        </select>
+      </div>
+
       <div className="modal__actions">
-        <button type="button" className="btn btn--ghost" onClick={onCancel}>
+        <button
+          type="button"
+          className="btn btn--ghost"
+          onClick={onCancel}
+        >
           Cancel
         </button>
-        <button type="submit" className="btn btn--primary">
+
+        <button
+          type="submit"
+          className="btn btn--primary"
+        >
           {submitLabel}
         </button>
       </div>
