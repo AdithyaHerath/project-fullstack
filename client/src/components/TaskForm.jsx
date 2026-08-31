@@ -1,101 +1,99 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from "react";
+import { STATUS_LABELS, TASK_STATUSES } from "../data/mockData";
+import "../styles/TaskForm.css";
 
-const TaskForm = ({ initialData, onSubmit, onCancel }) => {
-  const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    status: 'todo',
-    priority: 'medium'
-  });
+export default function TaskForm({ initialTask, onSubmit, onCancel, submitLabel = "Save Task" }) {
+  const [title, setTitle] = useState(initialTask?.title || "");
+  const [description, setDescription] = useState(initialTask?.description || "");
+  const [status, setStatus] = useState(initialTask?.status || TASK_STATUSES.TODO);
+  const [assignedTo, setAssignedTo] = useState(initialTask?.assignedTo || "");
+  const [errors, setErrors] = useState({});
 
-  // Populate form if we are editing an existing task
-  useEffect(() => {
-    if (initialData) {
-      setFormData(initialData);
-    }
-  }, [initialData]);
+  function validate() {
+    const nextErrors = {};
+    if (!title.trim()) nextErrors.title = "Title is required.";
+    if (!status) nextErrors.status = "Status is required.";
+    return nextErrors;
+  }
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = (e) => {
+  function handleSubmit(e) {
     e.preventDefault();
-    onSubmit(formData);
-  };
+    const nextErrors = validate();
+    setErrors(nextErrors);
+    if (Object.keys(nextErrors).length > 0) return;
+
+    onSubmit({
+      title: title.trim(),
+      description: description.trim(),
+      status,
+      assignedTo: assignedTo.trim(),
+    });
+  }
 
   return (
-    <form onSubmit={handleSubmit} className="task-form">
-      <div className="form-group">
-        <label htmlFor="title">Task Title</label>
+    <form className="task-form" onSubmit={handleSubmit} noValidate>
+      <div className="form-field">
+        <label htmlFor="task-title">Title</label>
         <input
+          id="task-title"
           type="text"
-          id="title"
-          name="title"
-          value={formData.title}
-          onChange={handleChange}
-          required
-          placeholder="Enter task title"
-          className="form-input"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          aria-invalid={Boolean(errors.title)}
+          aria-describedby={errors.title ? "task-title-error" : undefined}
+        />
+        {errors.title && (
+          <span id="task-title-error" className="form-error" role="alert">
+            {errors.title}
+          </span>
+        )}
+      </div>
+
+      <div className="form-field">
+        <label htmlFor="task-description">Description</label>
+        <textarea
+          id="task-description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          rows={3}
         />
       </div>
 
-      <div className="form-group">
-        <label htmlFor="description">Description</label>
-        <textarea
-          id="description"
-          name="description"
-          value={formData.description}
-          onChange={handleChange}
-          rows="3"
-          placeholder="Add details about this task..."
-          className="form-input"
-        ></textarea>
+      <div className="form-field">
+        <label htmlFor="task-status">Status</label>
+        <select id="task-status" value={status} onChange={(e) => setStatus(e.target.value)}>
+          {Object.values(TASK_STATUSES).map((s) => (
+            <option key={s} value={s}>
+              {STATUS_LABELS[s]}
+            </option>
+          ))}
+        </select>
+        {errors.status && (
+          <span className="form-error" role="alert">
+            {errors.status}
+          </span>
+        )}
       </div>
 
-      <div className="form-row">
-        <div className="form-group">
-          <label htmlFor="status">Status</label>
-          <select 
-            name="status" 
-            id="status" 
-            value={formData.status} 
-            onChange={handleChange}
-            className="form-select"
-          >
-            <option value="todo">To Do</option>
-            <option value="doing">Doing</option>
-            <option value="done">Done</option>
-          </select>
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="priority">Priority</label>
-          <select 
-            name="priority" 
-            id="priority" 
-            value={formData.priority} 
-            onChange={handleChange}
-            className="form-select"
-          >
-            <option value="low">Low</option>
-            <option value="medium">Medium</option>
-            <option value="high">High</option>
-          </select>
-        </div>
+      <div className="form-field">
+        <label htmlFor="task-assignee">Assignee</label>
+        <input
+          id="task-assignee"
+          type="text"
+          value={assignedTo}
+          onChange={(e) => setAssignedTo(e.target.value)}
+          placeholder="Optional"
+        />
       </div>
 
-      <div className="form-actions">
-        <button type="button" onClick={onCancel} className="btn-secondary">
+      <div className="modal__actions">
+        <button type="button" className="btn btn--ghost" onClick={onCancel}>
           Cancel
         </button>
-        <button type="submit" className="btn-primary">
-          {initialData ? 'Update Task' : 'Create Task'}
+        <button type="submit" className="btn btn--primary">
+          {submitLabel}
         </button>
       </div>
     </form>
   );
-};
-
-export default TaskForm;
+}
