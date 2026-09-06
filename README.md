@@ -2,7 +2,7 @@
 
 - **Student ID:** 34650
 - **Email:** thhyear3000@gmail.com
-- **GitHub username:** tntalagal
+- **GitHub username:** tntalagala
 
 ## Focus Area
 State Management & Data Layer
