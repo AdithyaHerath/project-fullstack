@@ -1,5 +1,7 @@
 import { useState } from "react";
+
 import { STATUS_LABELS, TASK_STATUSES } from "../data/mockData";
+
 import "../styles/TaskForm.css";
 
 export default function TaskForm({
@@ -26,13 +28,8 @@ export default function TaskForm({
   function validate() {
     const nextErrors = {};
 
-    if (!title.trim()) {
-      nextErrors.title = "Title is required.";
-    }
-
-    if (!status) {
-      nextErrors.status = "Status is required.";
-    }
+    if (!title.trim()) nextErrors.title = "Title is required.";
+    if (!status) nextErrors.status = "Status is required.";
 
     return nextErrors;
   }
@@ -58,14 +55,15 @@ export default function TaskForm({
     <form className="task-form" onSubmit={handleSubmit} noValidate>
       <div className="form-field">
         <label htmlFor="task-title">Title</label>
-
         <input
           id="task-title"
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           aria-invalid={Boolean(errors.title)}
-          aria-describedby={errors.title ? "task-title-error" : undefined}
+          aria-describedby={
+            errors.title ? "task-title-error" : undefined
+          }
         />
 
         {errors.title && (
@@ -81,7 +79,6 @@ export default function TaskForm({
 
       <div className="form-field">
         <label htmlFor="task-description">Description</label>
-
         <textarea
           id="task-description"
           value={description}
@@ -113,6 +110,18 @@ export default function TaskForm({
       </div>
 
       <div className="form-field">
+        <label htmlFor="task-assignee">Assignee</label>
+
+        <input
+          id="task-assignee"
+          type="text"
+          value={assignedTo}
+          onChange={(e) => setAssignedTo(e.target.value)}
+          placeholder="Optional"
+        />
+      </div>
+
+      <div className="form-field">
         <label htmlFor="task-priority">Priority</label>
 
         <select
@@ -126,18 +135,6 @@ export default function TaskForm({
         </select>
       </div>
 
-      <div className="form-field">
-        <label htmlFor="task-assignee">Assignee</label>
-
-        <input
-          id="task-assignee"
-          type="text"
-          value={assignedTo}
-          onChange={(e) => setAssignedTo(e.target.value)}
-          placeholder="Optional"
-        />
-      </div>
-
       <div className="modal__actions">
         <button
           type="button"
@@ -147,7 +144,10 @@ export default function TaskForm({
           Cancel
         </button>
 
-        <button type="submit" className="btn btn--primary">
+        <button
+          type="submit"
+          className="btn btn--primary"
+        >
           {submitLabel}
         </button>
       </div>
