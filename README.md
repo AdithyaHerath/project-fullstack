@@ -1,6 +1,4 @@
-Yes — here is the **complete `README.md` in one clean Markdown code block**, so you can copy it directly into VS Code.
 
-````md
 # 🚀 CollabBoard
 
 <p align="center">
