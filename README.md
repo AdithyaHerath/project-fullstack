@@ -99,10 +99,6 @@ Where applicable, the system provides machine-learning functionality through:
 
 # 🛠️ Technologies & Tools
 
-<p align="center">
-  <img src="https://skillicons.dev/icons?i=python,fastapi,tensorflow,react,js,html,css,mongodb,githubactions,git,github,vscode" />
-</p>
-
 ### Backend
 
 - **Python**
