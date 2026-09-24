@@ -716,7 +716,7 @@ This project was developed by **Group 16**.
 &nbsp;&nbsp;
 
 <a href="https://github.com/tntalagala">
-  <img src="https://github.com/tntalagala.png" width="80" height="80" alt="Thimasha">
+  <img src="https://github.com/tntalagala.png" width="80" height="80" alt="Thimasha Thalagala">
 </a>
 &nbsp;&nbsp;
 
@@ -728,8 +728,7 @@ This project was developed by **Group 16**.
 <a href="https://github.com/RavishanKR-11">
   <img src="https://github.com/RavishanKR-11.png" width="80" height="80" alt="Ravishan Randeniya">
 </a>
-
-<br><br>
+&nbsp;&nbsp;
 
 <a href="https://github.com/hansithaBA">
   <img src="https://github.com/hansithaBA.png" width="80" height="80" alt="Hansitha Bandara">
