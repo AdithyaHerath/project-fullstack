@@ -372,8 +372,8 @@ Example:
 
 ```env
 PORT=5000
-MONGODB_URI=your_mongodb_atlas_connection_string
-JWT_SECRET=your_jwt_secret
+MONGODB_URI=mongodb_atlas_connection_string
+JWT_SECRET=jwt_secret
 ```
 
 > ⚠️ Never commit your `.env` file or database credentials to GitHub.
